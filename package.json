@@ -1,0 +1,26 @@
+{
+  "name": "scrap",
+  "version": "0.0.1",
+  "description": "scrap MFAA and FBAA sites to get advisers info",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.local.js",
+    "start-ui": "start index.html",
+    "__comment_deploy-backend": "requires serverless framework installed; requires aws configuration file in user profile",
+    "deploy-backend": "sls deploy",
+    "__comment_deploy-frontend": "requires aws cli installed; requires aws configure with access key/secret in current CLI environment",
+    "deploy-ui": "aws s3 cp index.html s3://mycrm-test-projects/scrap.html",
+    "deploy": "npm run deploy-backend && npm run deploy-ui",
+    "test-backend": "start https://hnbp7pcz97.execute-api.ap-southeast-2.amazonaws.com/dev/?query=&location=2000",
+    "test-ui": "start http://mycrm-test-projects.s3-website-ap-southeast-2.amazonaws.com/scrap.html"
+  },
+  "author": "Tran Zha",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.16.4",
+    "querystring": "^0.2.0",
+    "serverless-http": "^1.9.1"
+  }
+}
