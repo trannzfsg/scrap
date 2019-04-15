@@ -22,3 +22,7 @@ functions:
           path: /
           cors:
             origin: '*'
+      - http:
+          path: /{proxy+}
+          method: ANY
+          cors: true

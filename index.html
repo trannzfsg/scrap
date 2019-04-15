@@ -9,97 +9,138 @@
     </style>
   </head>
   <body style='font-family:Verdana, Geneva, Tahoma, sans-serif;'>
-    <label for="name">Name: </label><input type="text" name="name" id="name" />
+    <label for="serverurl">API url: </label><input type="text" name="serverurl" id="serverurl" value="https://hnbp7pcz97.execute-api.ap-southeast-2.amazonaws.com/dev/" /> (local use http://localhost:3000/; server use https://hnbp7pcz97.execute-api.ap-southeast-2.amazonaws.com/dev/)
     <br /><br />
-    <label for="location">Location (postcode or suburb): </label><input type="text" name="location" id="location" />
+    <label for="fbaasecure">FBAA secure token: </label><input type="text" name="fbaasecure" id="fbaasecure" value="8a099a10b8" target="_blank"> (<a href="https://www.fbaa.com.au/members/find-a-broker/" target="_blank">click here</a> to get new "fbaasearchsecure" token from chrome dev tools)
     <br /><br />
-    <button onclick="javascript:search();" style="width:100px;height:30px;text-align:center;">Search</button>
-    <br /><br />
-    ------------------------
-    <br /><br />
-    <label for="serverurl">API url: </label><input type="text" name="serverurl" id="serverurl" value="https://hnbp7pcz97.execute-api.ap-southeast-2.amazonaws.com/dev/" /> (local use http://localhost:3000/)
-    <br /><br />
-    <label for="fbaarecaptcha">FBAA recaptcha token: </label><input type="text" name="fbaarecaptcha" id="fbaarecaptcha" value="03AOLTBLThmR6uRIYHkDUvTFppepZhFKQ5BuQmGCwOx5MGD0iG-lPSTF5alIuB7kO_r4VXs8MyM559K0mwSaR2Sdh6nJzjF5t_JmmU3uXFp4UE7wkg83bLlNJWPKVqqijepNiwSTsFzt6RUMp9pApUf14dQK0_eLLjDK9joly5pFtLZoXRbbuugtIDF7vm8eQmgtS21skQWenA34Zl5WUFgywhYd85O7cAMLY_nWjeG0ZPNYYdWTwQu0LK2e-CDzJxl90jDosiiBqWqpd5CLNUAQlfZxWFcSAHpJ2CwhF2LMbRyTg5uf_4lmrmyt3HHR4Ph8VKQb7807jm" /> (<a href="https://www.fbaa.com.au/members/find-a-broker/" target="_blank">click here</a> to get new "recaptcha" from chrome dev tools)
-    <br /><br />
-    <label for="fbaasecure">FBAA secure token: </label><input type="text" name="fbaasecure" id="fbaasecure" value="c140bd1c95" target="_blank"> (<a href="https://www.fbaa.com.au/members/find-a-broker/" target="_blank">click here</a> to get new "fbaasearchsecure" token from chrome dev tools)
+    <label for="fbaarecaptcha">FBAA recaptcha token: </label><input type="text" name="fbaarecaptcha" id="fbaarecaptcha" value="03AOLTBLSp7G1wuP6IwgBTHf5-pFyNSgLpUNPcU9zMwcEuMYKDu8ZxsQyjyJ6iWCTX4Qb0H5x5VVo4dTo7965k5_6o-P97z5Ct2p7iDtNxmOEX107FiE5_CSNRdEtvwidhOPF5hwcve314AQ4DsCThw7bZyJpGQnMV9PRw90tzxD4DKkVrRLtSYPjDj9V0HvpFVTD_iBS3oQyESNNCVoFtk10RulYx22yoI90XXD45kpv4pKPZZIDCOWM9YFvHMm124g2QoOQgOFenpFgiEUWUyfZ-9E16jfKy3P6y8gzHnq3wVrmGBTacodmYCIafLAiA6J0rcHfso2ME" /> (<a href="https://www.fbaa.com.au/members/find-a-broker/" target="_blank">click here</a> to get new "recaptcha" from chrome dev tools)
     <br /><br />
     ------------------------
     <br /><br />
-    <div id="response">please start searching</div>
+    <div style="float:left;width:50%;">
+      <label for="name">Name: </label><input type="text" name="name" id="name" />
+      <br /><br />
+      <label for="location">Location (postcode or suburb): </label><input type="text" name="location" id="location" />
+      <br /><br />
+      <button onclick="javascript:search();" style="width:100px;height:30px;text-align:center;">Search</button>
+    </div>
+    <div style="float:left;width:50%;">
+      <textarea name="verify" id="verify" style="width:450px;height:80px;" placeholder="please enter JSON array">[{"FamilyID":2354169,"FirstName":"Bruce","LastName":"Ly","PreferredName":"Bruce","LoginUserName":"master88bl@gmail.com","DOB":"NULL","Email":"master88bl@gmail.com","WorkEmail":"","SecondaryEmail":"","MobilePhone":"411985350","HomePhone":"","BusinessPhone":"","ReportingState":"","AccessType":"Adviser","ContactTypeRole":"","ABN":"NULL","ACN":"NULL","AdviserOrgName":"NULL","BusinessAddress":"2211, Australia"}, {"FamilyID":2034804,"FirstName":"Rebecca","LastName":"Simmonds","PreferredName":"NULL","LoginUserName":"bec.simmonds@hotmail.com","DOB":"NULL","Email":"bec.simmonds@hotmail.com","WorkEmail":"","SecondaryEmail":"","MobilePhone":"","HomePhone":"400476456","BusinessPhone":"","ReportingState":"QLD","AccessType":"Adviser","ContactTypeRole":"","ABN":"NULL","ACN":"NULL","AdviserOrgName":"NULL","BusinessAddress":"amford ,"}, {"FamilyID":2030583,"FirstName":"Shelley elizabet","LastName":"Mckean","PreferredName":"NULL","LoginUserName":"smckean@chl.net.au","DOB":"NULL","Email":"smckean@chl.net.au","WorkEmail":"","SecondaryEmail":"","MobilePhone":"423270890","HomePhone":"","BusinessPhone":"","ReportingState":"VIC/TAS","AccessType":"Adviser","ContactTypeRole":"Franchisee","ABN":"NULL","ACN":"NULL","AdviserOrgName":"NULL","BusinessAddress":"0 Park Blvd, Ferntree Gully VIC 3156, Australia"}, {"FamilyID":2033493,"FirstName":"Sharon","LastName":"Yujnovich","PreferredName":"NULL","LoginUserName":"sharon@ruthvens.com.au","DOB":"NULL","Email":"sharon@ruthvens.com.au","WorkEmail":"","SecondaryEmail":"","MobilePhone":"0437 609 728","HomePhone":"","BusinessPhone":"","ReportingState":"WA","AccessType":"Adviser","ContactTypeRole":"","ABN":"NULL","ACN":"NULL","AdviserOrgName":"NULL","BusinessAddress":"25 Victoria St, Midland WA 6056, Australia"}, {"FamilyID":2030417,"FirstName":"David","LastName":"Reese","PreferredName":"NULL","LoginUserName":"NULL","DOB":"NULL","Email":"","WorkEmail":"","SecondaryEmail":"","MobilePhone":"408288488","HomePhone":"","BusinessPhone":"","ReportingState":"VIC/TAS","AccessType":"Adviser","ContactTypeRole":"Franchisee","ABN":"NULL","ACN":"NULL","AdviserOrgName":"NULL","BusinessAddress":"54-58 Garden St, South Yarra VIC 3141, Australia"}]</textarea>
+      <br /><br />
+      <button onclick="javascript:verify();" style="width:100px;height:30px;text-align:center;">Verify</button>
+    </div>
+    <div style="clear:both;height:0;"></div>
+    <br />
+    ------------------------
+    <br /><br />
+    <div id="response">please click buttons to start</div>
     <script>
-        let search = () => {
-            document.getElementById('response').innerHTML = 'loading...';
-            let name = document.getElementById('name').value;
-            let location = document.getElementById('location').value;
-            if(name.replace(/\ /g,'')==='' && location.replace(/\ /g,'')==='') {
-              alert('please enter name or location or both');
-              return;
-            }
-            let serverurl = document.getElementById('serverurl').value;
-            let fbaarecaptcha = document.getElementById('fbaarecaptcha').value;
-            let fbaasecure = document.getElementById('fbaasecure').value;
-            let url = serverurl;
-            url += '?query=';
-            if(name.replace(/\ /g,'')!==''){
-              url += name;
-            }
-            url += '&location=';
-            if(location.replace(/\ /g,'')!==''){
-              url += location;
-            }
-            url += '&fbaarecaptcha=';
-            if(fbaarecaptcha.replace(/\ /g,'')!==''){
-              url += fbaarecaptcha;
-            }
-            url += '&fbaasecure=';
-            if(fbaasecure.replace(/\ /g,'')!==''){
-              url += fbaasecure;
-            }
-            let xhr = new XMLHttpRequest();
-            xhr.open('GET', url, true);
-            xhr.onreadystatechange = function () {
-              if(xhr.readyState === 4 && xhr.status === 200) {
-                let res = JSON.parse(xhr.responseText);
-                let reshtml = '';
-                //if error (fbaa recaptcha/secure expires)
-                if (res.error !== null)
-                  reshtml += 'API error: ' + res.error.message + '<br />' + res.error.stack + '<br /><br />';
-                //MFAA results
-                if (res.MFAAadvisers && res.MFAAadvisers.length > 0)
-                  reshtml += '<strong>MFAA results<strong><br /><br />' + json2table(res.MFAAadvisers);
-                else  
-                  reshtml += 'Cannot find any adviser on MFAA';
-                reshtml += '<br /><br />';
-                //FBAA results
-                if (res.FBAAadvisers && res.FBAAadvisers.length > 0)
-                  reshtml += '<strong>FBAA results<strong><br /><br />' + json2table(res.FBAAadvisers);
-                else
-                  reshtml += 'Cannot find any adviser on FBAA';
-                document.getElementById('response').innerHTML = reshtml;
-              }
-              else if(xhr.readyState === 4) {
-                document.getElementById('response').innerHTML = 'API error: ' + xhr.statusText + '. ' + xhr.responseText;
-              }
-            };
-            xhr.send();
+      let verify = () => {
+        document.getElementById('response').innerHTML = 'loading...';
+        let verifytxt = document.getElementById('verify').value;
+        var advisers = JSON.parse(verifytxt);
+        let serverurl = document.getElementById('serverurl').value;
+        let fbaarecaptcha = document.getElementById('fbaarecaptcha').value;
+        let fbaasecure = document.getElementById('fbaasecure').value;
+        let reqobj = {fbaasecure: fbaasecure, fbaarecaptcha: fbaasecure, advisers: advisers};
+        let url = serverurl+"verify";
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+          if(xhr.readyState === 4 && xhr.status === 200) {
+            let res = JSON.parse(xhr.responseText);
+            let reshtml = '';
+            //if error (fbaa recaptcha/secure expires)
+            if (res.error !== null)
+              reshtml += 'API error: ' + res.error.message + '<br />' + res.error.stack + '<br /><br />';
+            //MFAA results
+            if (res.results.length > 0)
+              reshtml += '<strong>Verify results<strong><br /><br />' + json2table(res.results);
+            else  
+              reshtml += 'No valid input';
+            reshtml += '<br /><br />';
+            document.getElementById('response').innerHTML = reshtml;
+          }
+          else if(xhr.readyState === 4) {
+            document.getElementById('response').innerHTML = 'API error: ' + xhr.statusText + '. ' + xhr.responseText;
+          }
         };
-        let json2table = (json, classes) => {
-          let cols = Object.keys(json[0]);
-          let headerRow = '';
-          let bodyRows = '';
-          classes = classes || '';
-          cols.map(function(col) {
-            headerRow += '<th>' + col + '</th>';
-          });
-          json.map(function(row) {
-            bodyRows += '<tr>';
-            cols.map(function(colName) {
-              bodyRows += '<td>' + row[colName] + '</td>';
-            });
-            bodyRows += '</tr>';
-          });
-          return '<table class="' + classes + '"><thead><tr>' + headerRow + '</tr></thead><tbody>' + bodyRows + '</tbody></table>';
+        xhr.send(JSON.stringify(reqobj));
+      }
+      let search = () => {
+        document.getElementById('response').innerHTML = 'loading...';
+        let name = document.getElementById('name').value;
+        let location = document.getElementById('location').value;
+        if(name.replace(/\ /g,'')==='' && location.replace(/\ /g,'')==='') {
+          document.getElementById('response').innerHTML = 'please enter name or location or both';
+          return;
+        }
+        let serverurl = document.getElementById('serverurl').value;
+        let fbaarecaptcha = document.getElementById('fbaarecaptcha').value;
+        let fbaasecure = document.getElementById('fbaasecure').value;
+        let url = serverurl;
+        url += '?query=';
+        if(name.replace(/\ /g,'')!==''){
+          url += name;
+        }
+        url += '&location=';
+        if(location.replace(/\ /g,'')!==''){
+          url += location;
+        }
+        url += '&fbaarecaptcha=';
+        if(fbaarecaptcha.replace(/\ /g,'')!==''){
+          url += fbaarecaptcha;
+        }
+        url += '&fbaasecure=';
+        if(fbaasecure.replace(/\ /g,'')!==''){
+          url += fbaasecure;
+        }
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.onreadystatechange = function () {
+          if(xhr.readyState === 4 && xhr.status === 200) {
+            let res = JSON.parse(xhr.responseText);
+            let reshtml = '';
+            //if error (fbaa recaptcha/secure expires)
+            if (res.error !== null)
+              reshtml += 'API error: ' + res.error.message + '<br />' + res.error.stack + '<br /><br />';
+            //MFAA results
+            if (res.MFAAadvisers && res.MFAAadvisers.length > 0)
+              reshtml += '<strong>MFAA results<strong><br /><br />' + json2table(res.MFAAadvisers);
+            else  
+              reshtml += 'Cannot find any adviser on MFAA';
+            reshtml += '<br /><br />';
+            //FBAA results
+            if (res.FBAAadvisers && res.FBAAadvisers.length > 0)
+              reshtml += '<strong>FBAA results<strong><br /><br />' + json2table(res.FBAAadvisers);
+            else
+              reshtml += 'Cannot find any adviser on FBAA';
+            document.getElementById('response').innerHTML = reshtml;
+          }
+          else if(xhr.readyState === 4) {
+            document.getElementById('response').innerHTML = 'API error: ' + xhr.statusText + '. ' + xhr.responseText;
+          }
         };
+        xhr.send();
+      };
+      let json2table = (json, classes) => {
+        let cols = Object.keys(json[0]);
+        let headerRow = '';
+        let bodyRows = '';
+        classes = classes || '';
+        cols.map(function(col) {
+          headerRow += '<th>' + col + '</th>';
+        });
+        json.map(function(row) {
+          bodyRows += '<tr>';
+          cols.map(function(colName) {
+            bodyRows += '<td>' + (row[colName].toString().length > 100 ? row[colName].toString().substring(0,100)+'...' : row[colName]) + '</td>';
+          });
+          bodyRows += '</tr>';
+        });
+        return '<table class="' + classes + '"><thead><tr>' + headerRow + '</tr></thead><tbody>' + bodyRows + '</tbody></table>';
+      };
     </script>
   </body>
 </html>

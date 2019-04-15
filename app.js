@@ -4,6 +4,7 @@ const express = require('express');
 const axios = require('axios');
 const cheerio = require('cheerio');
 const qs = require('querystring');
+const bodyParser = require('body-parser');
 const app = express();
 const mfaaurl = 'https://www.mortgageandfinancehelp.com.au/find-accredited-broker/';
 const fbaaurl = 'https://www.fbaa.com.au/wp-admin/admin-ajax.php';
@@ -15,22 +16,85 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
   next();
 });
+//body parser for post requests
+app.use(bodyParser.json());
 
 //define route
+//verify
+app.post('/verify', (req, res) => {
+  let fbaarecaptcha=req.body.fbaarecaptcha;
+  let fbaasecure=req.body.fbaasecure;
+  let advisers=req.body.advisers;
+  res.setHeader('Content-Type', 'application/json');
+  let searchobj = {};
+  let resobj = {
+    error: null,
+    results: null
+  };
+  //for each adviser
+  let promises_results = [];
+  let results = [];
+  advisers.forEach( (adviser) => {
+    let query = adviser.FirstName + ' ' + adviser.LastName;
+    let location = '';
+    promises_results.push(
+      search_mfaa_fbaa(query, location, fbaarecaptcha, fbaasecure)
+        .then( (resdata) => {
+          let result = {
+            FamilyID: adviser.FamilyID,
+            MFAA: (resdata.MFAAadvisers.length > 0 ? 'YES - '+JSON.stringify(resdata.MFAAadvisers) : 'NO'),
+            FBAA: (resdata.FBAAadvisers.length > 0 ? 'YES - '+JSON.stringify(resdata.FBAAadvisers) : 'NO')
+          }
+          return result;
+        })
+    );
+  });
+  //promise.all to generate results
+  Promise.all(promises_results)
+    .then( (results) => {
+      resobj.results = results;
+      res.send(resobj);
+    })
+    .catch( (err) => {
+      console.log(err.message + ' ' + err.stack);
+      resobj.error = {message: err.message, stack: err.stack};
+      res.send(resobj);
+    });
+});
+
+//search
 app.get('/', (req, res) => {
   let query=req.query.query;
   let location=req.query.location;
-  let fbaa_recaptcha=req.query.fbaarecaptcha;
-  let fbaa_fbaasearchsecure=req.query.fbaasecure;
+  let fbaarecaptcha=req.query.fbaarecaptcha;
+  let fbaasecure=req.query.fbaasecure;
   res.setHeader('Content-Type', 'application/json');
   let resobj = {
     error: null,
     MFAAadvisers: null,
     FBAAadvisers: null
   };
+  search_mfaa_fbaa(query, location, fbaarecaptcha, fbaasecure)
+    .then( (resdata) => {
+      resobj = resdata;
+      res.send(resobj);
+    })
+    .catch( (err) => {
+      console.log(err.message + ' ' + err.stack);
+      resobj.error = {message: err.message, stack: err.stack};
+      res.send(resobj);
+    });
+});
+
+let search_mfaa_fbaa = (query, location, fbaa_recaptcha, fbaa_fbaasearchsecure) => {
+  let resobj = {
+    error: null,
+    MFAAadvisers: null,
+    FBAAadvisers: null
+  };
   //MFAA
-	let url = mfaaurl + '?query='+query+'&location='+location;
-  axios.get(url)
+  let url = mfaaurl + '?query='+query+'&location='+location;
+  return axios.get(url)
     .then( (resdata) => {
       let html = resdata.data;
       let $ = cheerio.load(html);
@@ -101,16 +165,13 @@ app.get('/', (req, res) => {
         };
       });
       resobj.FBAAadvisers = advisers;
-
-      //response
-      res.send(resobj);
+      return resobj;
     })
     .catch( (err) => {
       console.log(err.message + ' ' + err.stack);
-      res.setHeader('Content-Type', 'application/json');
       resobj.error = {message: err.message, stack: err.stack};
-      res.send(resobj);
+      return resobj;
     });
-});
+};
 
 module.exports = app;
