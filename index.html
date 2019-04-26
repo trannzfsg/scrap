@@ -9,11 +9,13 @@
     </style>
   </head>
   <body style='font-family:Verdana, Geneva, Tahoma, sans-serif;'>
-    <label for="serverurl">API url: </label><input type="text" name="serverurl" id="serverurl" value="https://hnbp7pcz97.execute-api.ap-southeast-2.amazonaws.com/dev/" /> (local use http://localhost:3000/; server use https://hnbp7pcz97.execute-api.ap-southeast-2.amazonaws.com/dev/)
+    <label for="serverurl">API url: </label><input type="text" name="serverurl" id="serverurl" value="http://localhost:3000/" /> (local use http://localhost:3000/; server use https://hnbp7pcz97.execute-api.ap-southeast-2.amazonaws.com/dev/)
     <br /><br />
-    <label for="fbaasecure">FBAA secure token: </label><input type="text" name="fbaasecure" id="fbaasecure" value="8a099a10b8" target="_blank"> (<a href="https://www.fbaa.com.au/members/find-a-broker/" target="_blank">click here</a> to get new "fbaasearchsecure" token from chrome dev tools)
+    <label for="fbaasecure">FBAA secure token: </label><input type="text" name="fbaasecure" id="fbaasecure" value="48aba92954" target="_blank"> 
+    (<a href="https://www.fbaa.com.au/members/find-a-broker/" target="_blank">click here</a> to get new "fbaasearchsecure" token from chrome dev tools)
     <br /><br />
-    <label for="fbaarecaptcha">FBAA recaptcha token: </label><input type="text" name="fbaarecaptcha" id="fbaarecaptcha" value="03AOLTBLSp7G1wuP6IwgBTHf5-pFyNSgLpUNPcU9zMwcEuMYKDu8ZxsQyjyJ6iWCTX4Qb0H5x5VVo4dTo7965k5_6o-P97z5Ct2p7iDtNxmOEX107FiE5_CSNRdEtvwidhOPF5hwcve314AQ4DsCThw7bZyJpGQnMV9PRw90tzxD4DKkVrRLtSYPjDj9V0HvpFVTD_iBS3oQyESNNCVoFtk10RulYx22yoI90XXD45kpv4pKPZZIDCOWM9YFvHMm124g2QoOQgOFenpFgiEUWUyfZ-9E16jfKy3P6y8gzHnq3wVrmGBTacodmYCIafLAiA6J0rcHfso2ME" /> (<a href="https://www.fbaa.com.au/members/find-a-broker/" target="_blank">click here</a> to get new "recaptcha" from chrome dev tools)
+    <label for="fbaarecaptcha">FBAA recaptcha token: </label><input type="text" name="fbaarecaptcha" id="fbaarecaptcha" value="03AOLTBLSPAeDFTicVLAN4308rWQ8W0wv4I4sjWpDQkeKrxUYd1bf5fqO3ScgredRa2sVWCvBfLOgeWcztEBHv4nDmJFFWd3-XnQey0KoWt2nv7ZC8NpKvbzYe4fwjI6PjJ4Iugldz_k3a_MMZLyn6LN9fWTlDYmYUNy9jYFBPiobO2bbLTtZ5ZZVtXc8jJwZChJ413HqDkWPsP_1JBIk51U_7XdQ27N3XQtAlJQpqvs_kjWPNIKuPQIKucqAMa2U-kppDj2MqgkaZIcbuzj9NIoaiipmVgUcXbFXVuF8x9UB2QH_RmepYtkMmlDpW45iiy6r4XzQ0TFcJ" /> 
+    (<a href="https://www.fbaa.com.au/members/find-a-broker/" target="_blank">click here</a> to get new "recaptcha" from chrome dev tools)
     <br /><br />
     ------------------------
     <br /><br />
@@ -25,7 +27,7 @@
       <button onclick="javascript:search();" style="width:100px;height:30px;text-align:center;">Search</button>
     </div>
     <div style="float:left;width:50%;">
-      <textarea name="verify" id="verify" style="width:450px;height:80px;" placeholder="please enter JSON array">[{"FamilyID":2354169,"FirstName":"Bruce","LastName":"Ly","PreferredName":"Bruce","LoginUserName":"master88bl@gmail.com","DOB":"NULL","Email":"master88bl@gmail.com","WorkEmail":"","SecondaryEmail":"","MobilePhone":"411985350","HomePhone":"","BusinessPhone":"","ReportingState":"","AccessType":"Adviser","ContactTypeRole":"","ABN":"NULL","ACN":"NULL","AdviserOrgName":"NULL","BusinessAddress":"2211, Australia"}, {"FamilyID":2034804,"FirstName":"Rebecca","LastName":"Simmonds","PreferredName":"NULL","LoginUserName":"bec.simmonds@hotmail.com","DOB":"NULL","Email":"bec.simmonds@hotmail.com","WorkEmail":"","SecondaryEmail":"","MobilePhone":"","HomePhone":"400476456","BusinessPhone":"","ReportingState":"QLD","AccessType":"Adviser","ContactTypeRole":"","ABN":"NULL","ACN":"NULL","AdviserOrgName":"NULL","BusinessAddress":"amford ,"}, {"FamilyID":2030583,"FirstName":"Shelley elizabet","LastName":"Mckean","PreferredName":"NULL","LoginUserName":"smckean@chl.net.au","DOB":"NULL","Email":"smckean@chl.net.au","WorkEmail":"","SecondaryEmail":"","MobilePhone":"423270890","HomePhone":"","BusinessPhone":"","ReportingState":"VIC/TAS","AccessType":"Adviser","ContactTypeRole":"Franchisee","ABN":"NULL","ACN":"NULL","AdviserOrgName":"NULL","BusinessAddress":"0 Park Blvd, Ferntree Gully VIC 3156, Australia"}, {"FamilyID":2033493,"FirstName":"Sharon","LastName":"Yujnovich","PreferredName":"NULL","LoginUserName":"sharon@ruthvens.com.au","DOB":"NULL","Email":"sharon@ruthvens.com.au","WorkEmail":"","SecondaryEmail":"","MobilePhone":"0437 609 728","HomePhone":"","BusinessPhone":"","ReportingState":"WA","AccessType":"Adviser","ContactTypeRole":"","ABN":"NULL","ACN":"NULL","AdviserOrgName":"NULL","BusinessAddress":"25 Victoria St, Midland WA 6056, Australia"}, {"FamilyID":2030417,"FirstName":"David","LastName":"Reese","PreferredName":"NULL","LoginUserName":"NULL","DOB":"NULL","Email":"","WorkEmail":"","SecondaryEmail":"","MobilePhone":"408288488","HomePhone":"","BusinessPhone":"","ReportingState":"VIC/TAS","AccessType":"Adviser","ContactTypeRole":"Franchisee","ABN":"NULL","ACN":"NULL","AdviserOrgName":"NULL","BusinessAddress":"54-58 Garden St, South Yarra VIC 3141, Australia"}]</textarea>
+      <textarea name="verify" id="verify" style="width:450px;height:80px;" placeholder="please enter JSON array"></textarea>
       <br /><br />
       <button onclick="javascript:verify();" style="width:100px;height:30px;text-align:center;">Verify</button>
     </div>
@@ -52,8 +54,11 @@
             let res = JSON.parse(xhr.responseText);
             let reshtml = '';
             //if error (fbaa recaptcha/secure expires)
-            if (res.error !== null)
+            if (res.error !== null){
               reshtml += 'API error: ' + res.error.message + '<br />' + res.error.stack + '<br /><br />';
+              document.getElementById('response').innerHTML = reshtml;
+              return;
+            }
             //MFAA results
             if (res.results.length > 0)
               reshtml += '<strong>Verify results<strong><br /><br />' + json2table(res.results);
@@ -103,8 +108,11 @@
             let res = JSON.parse(xhr.responseText);
             let reshtml = '';
             //if error (fbaa recaptcha/secure expires)
-            if (res.error !== null)
+            if (res.error !== null) {
               reshtml += 'API error: ' + res.error.message + '<br />' + res.error.stack + '<br /><br />';
+              document.getElementById('response').innerHTML = reshtml;
+              return;
+            }
             //MFAA results
             if (res.MFAAadvisers && res.MFAAadvisers.length > 0)
               reshtml += '<strong>MFAA results<strong><br /><br />' + json2table(res.MFAAadvisers);
@@ -135,7 +143,10 @@
         json.map(function(row) {
           bodyRows += '<tr>';
           cols.map(function(colName) {
-            bodyRows += '<td>' + (row[colName].toString().length > 100 ? row[colName].toString().substring(0,100)+'...' : row[colName]) + '</td>';
+            if(row[colName] == null)
+              bodyRows += '<td>NULL</td>';
+            else
+              bodyRows += '<td>' + (row[colName].toString().length > 100 ? row[colName].toString().substring(0,100)+'...' : row[colName]) + '</td>';
           });
           bodyRows += '</tr>';
         });

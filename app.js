@@ -9,6 +9,8 @@ const app = express();
 const mfaaurl = 'https://www.mortgageandfinancehelp.com.au/find-accredited-broker/';
 const fbaaurl = 'https://www.fbaa.com.au/wp-admin/admin-ajax.php';
 const fbaa_action = 'do_search_member';
+const concurrency = 10;
+const maxnumberperfun = 100;
 
 //allow CORS
 app.use(function(req, res, next) {
@@ -25,16 +27,43 @@ app.post('/verify', (req, res) => {
   let fbaarecaptcha=req.body.fbaarecaptcha;
   let fbaasecure=req.body.fbaasecure;
   let advisers=req.body.advisers;
+  if (advisers.length > maxnumberperfun){
+    let resobj = {
+      error: {message: "max number of input advisers is "+maxnumberperfun, stack: "n/a"},
+      results: null
+    };
+    res.send(resobj);
+    return;
+  }
   res.setHeader('Content-Type', 'application/json');
-  let searchobj = {};
-  let resobj = {
-    error: null,
-    results: null
-  };
-  //for each adviser
+  let finalresults = [];
+  loopadvisers(res, fbaarecaptcha, fbaasecure, advisers, finalresults);
+});
+
+//var count = 0;
+let loopadvisers = (res, fbaarecaptcha, fbaasecure, advisers, finalresults) => {
+  //count ++;
+  //console.log('|| ' + count + ' ' + JSON.stringify(finalresults.length > concurrency ? finalresults.splice(finalresults.length-concurrency) : finalresults) + ' ||');
+  if (advisers == null) {
+    let resobj = {
+      error: null,
+      results: finalresults
+    };
+    res.send(resobj);
+    return;
+  }
+  let curradvisers,nextadvisers;
+  if (advisers.length > concurrency) {
+    curradvisers = advisers.slice(0, concurrency);
+    nextadvisers = advisers.slice(concurrency);
+  }
+  else {
+    curradvisers = advisers;
+    nextadvisers = null;
+  }
+
   let promises_results = [];
-  let results = [];
-  advisers.forEach( (adviser) => {
+  curradvisers.forEach( (adviser) => {
     let query = adviser.FirstName + ' ' + adviser.LastName;
     let location = '';
     promises_results.push(
@@ -42,8 +71,8 @@ app.post('/verify', (req, res) => {
         .then( (resdata) => {
           let result = {
             FamilyID: adviser.FamilyID,
-            MFAA: (resdata.MFAAadvisers.length > 0 ? 'YES - '+JSON.stringify(resdata.MFAAadvisers) : 'NO'),
-            FBAA: (resdata.FBAAadvisers.length > 0 ? 'YES - '+JSON.stringify(resdata.FBAAadvisers) : 'NO')
+            MFAA: (resdata.MFAAadvisers.length > 0 ? 1 : 0),//(resdata.MFAAadvisers.length > 0 ? 'YES - '+JSON.stringify(resdata.MFAAadvisers) : 'NO'),
+            FBAA: (resdata.FBAAadvisers.length > 0 ? 1 : 0) //(resdata.FBAAadvisers.length > 0 ? 'YES - '+JSON.stringify(resdata.FBAAadvisers) : 'NO')
           }
           return result;
         })
@@ -52,15 +81,19 @@ app.post('/verify', (req, res) => {
   //promise.all to generate results
   Promise.all(promises_results)
     .then( (results) => {
-      resobj.results = results;
-      res.send(resobj);
+      finalresults = finalresults.concat(results);
+      loopadvisers(res, fbaarecaptcha, fbaasecure, nextadvisers, finalresults);
     })
     .catch( (err) => {
       console.log(err.message + ' ' + err.stack);
-      resobj.error = {message: err.message, stack: err.stack};
+      let resobj = {
+        error: {message: err.message, stack: err.stack},
+        results: null
+      };
       res.send(resobj);
+      return;
     });
-});
+};
 
 //search
 app.get('/', (req, res) => {
@@ -165,11 +198,6 @@ let search_mfaa_fbaa = (query, location, fbaa_recaptcha, fbaa_fbaasearchsecure) 
         };
       });
       resobj.FBAAadvisers = advisers;
-      return resobj;
-    })
-    .catch( (err) => {
-      console.log(err.message + ' ' + err.stack);
-      resobj.error = {message: err.message, stack: err.stack};
       return resobj;
     });
 };
